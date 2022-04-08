@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tushar | AVRL</title>
+</head>
+<style>
+    /* CSS */
+    .container{
+        box-sizing: border-box;
+        width:500px;
+        top:100px;
+        left:80px;
+        margin: auto;
+        text-align: center;
+        position: relative;
+        background-color: black;
+    }
+
+    .circle > *{
+        display: inline-block;
+        margin: auto;
+        width:100px;
+        height: 100px;
+        box-sizing: border-box;
+    }
+    .circle p{
+        height: 50px;
+        width: 50px;
+        border-radius: 34px;
+        position: absolute;
+    }
+    .start{
+        position: absolute;
+        top:230px;
+        left: 45px;  
+    }
+    .stop{
+        position: absolute;
+        top:230px;
+        left: 194px;  
+    }
+    .circle #c-1{
+        background: red;
+        top:0;
+        left:48px;
+        z-index: 1;
+        transition: all 2s ease ;
+    }
+    .circle #c-2{
+        background: yellow;
+        top:0px;
+        left:200px;
+        z-index: -1;
+        transition: all ease 2s;
+    }
+    .circle #c-3{
+        background: deepskyblue;
+        bottom:-178px;
+        right:250px;
+        z-index: -2;
+        transition: all ease 2s;
+    }
+    .circle #c-4{
+        background: green;
+        bottom:-178px;
+        right:400px;
+        z-index: -3;
+        transition: all ease 2s;
+    }
+    button{
+        background-color: #20B2AA;
+        color: #ffffff;
+        border: none;
+        width: 65px;
+        height: 20px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    @keyframes animate1{
+        50%{
+            width: 201px;
+            border-radius: 30px;
+        }
+    }
+    @keyframes animate2{
+        50%{
+            height:178px;
+            border-radius: 30px;
+        }
+    }   
+</style>
+
+<body>
+    <!-- HTML -->
+    <div class="container">
+            <div class="circle">
+                <p id="c-1"></p>
+                <p id="c-2"></p>
+                <p id="c-3"></p>
+                <p id="c-4"></p>
+            </div>
+        <button class="start" onclick="startAnimation()">Start</button>
+        <button class="stop" onclick="stopAnimation()">Stop</button>
+    </div>
+
+<!-- Javascript -->
+    <script>
+
+        let circle1 = document.getElementById('c-1').style;
+        let circle2 = document.getElementById('c-2').style;
+        let circle3 = document.getElementById('c-3').style;
+        let circle4 = document.getElementById('c-4').style;
+        let colorIndex=0;
+        let intervalID;
+        let circle=[circle1,circle2,circle3,circle4]
+        let colors=["yellow", "deepskyblue", "green","red"];
+
+        //To start Animation 
+        function startAnimation(){
+            intervalID=setInterval(setColor,2000)
+
+            for(let i=0; i<circle.length ;i++){
+
+                if(i%2==0){
+                    circle[i].animation="animate1 2s forwards  infinite ease-in-out "
+                }
+                else{
+                    circle[i].animation="animate2 2s forwards  infinite ease-in-out "
+                    
+                }
+            }    
+        }
+        //To Stop Animation
+        function stopAnimation(){
+            circle.map((c)=>{
+                c.animation="paused"
+            })
+            unsetColor()
+
+        }
+        //To Change Color
+        function setColor(){
+                circle1.background=colors[colorIndex]
+                circle2.background=colors[colorIndex+=1]
+                circle3.background=colors[colorIndex+=1]
+                circle4.background=colors[colorIndex+=1]
+                colorIndex=0
+                colors.push.apply(colors, colors.splice(0,1));           
+       
+        }
+
+        //To stop changing color
+        function unsetColor(){
+            clearInterval(intervalID)
+        }
+    </script>
+</body>
+</html>
